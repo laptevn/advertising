@@ -1,9 +1,27 @@
-package com.laptevn.advertising;
+package com.laptevn.advertising.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 // TODO: Use other names for serialized form
+@IdClass(DataPrimaryKey.class)
+@Entity
+@Table(name = "site_monthly_data", indexes = {
+        @Index(name = "month_index",  columnList = "month"),
+        @Index(name = "site_index", columnList = "site")})
 public class SiteMonthlyData {
+    @Id
+    @Column(name = "month", nullable = false) //TODO: Check if we can remove this line
     private String month;
+
+    @Id
+    @Column(name = "site", nullable = false)
     private String site;
+
     private long requestsCount;
     private long impressionsCount;
     private long clicksCount;

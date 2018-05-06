@@ -1,10 +1,9 @@
-package com.laptevn.advertising.parse;
+package com.laptevn.advertising.initialization;
 
-import com.laptevn.advertising.SiteMonthlyData;
+import com.laptevn.advertising.entity.SiteMonthlyData;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
@@ -16,9 +15,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class DataParserTest {
-    private static final String JANUARY_FILE_PREFIX = "2018_01_report";
-    private static final String FEBRUARY_FILE_PREFIX = "2018_02_report";
-    private static final String FILE_SUFFIX = ".csv";
+    static final String JANUARY_FILE_PREFIX = "2018_01_report";
+    static final String FEBRUARY_FILE_PREFIX = "2018_02_report";
+    static final String FILE_SUFFIX = ".csv";
 
     @Test(expected = ParseException.class)
     public void notExistingSourceFile() {
@@ -157,18 +156,8 @@ public class DataParserTest {
         parseData("2017_01_report", FILE_SUFFIX);
     }
 
-    private static File createTempFile(String prefix, String suffix, Optional<String> content) throws IOException {
-        File sourceFile = File.createTempFile(prefix, suffix);
-        if (content.isPresent()) {
-            try (FileWriter writer = new FileWriter(sourceFile)) {
-                writer.write(content.get());
-            }
-        }
-        return sourceFile;
-    }
-
     private static List<SiteMonthlyData> parseData(String prefix, String suffix, Optional<String> content) throws IOException {
-        File sourceFile = createTempFile(prefix, suffix, content);
+        File sourceFile = FileUtils.createTempFile(prefix, suffix, content, Optional.empty());
         try {
             return new DataParser().parse(sourceFile.toPath());
         } finally {

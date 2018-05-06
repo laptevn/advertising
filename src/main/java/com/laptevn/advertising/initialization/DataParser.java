@@ -1,7 +1,8 @@
-package com.laptevn.advertising.parse;
+package com.laptevn.advertising.initialization;
 
-import com.laptevn.advertising.SiteMonthlyData;
+import com.laptevn.advertising.entity.SiteMonthlyData;
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
  * Parses CSV files to get the list of site monthly data.
  */
 @ThreadSafe
+@Component
 public class DataParser {
     private final static int MONTH_GROUP_INDEX = 1;
     private final static String ENTRIES_SEPARATOR = ",";
@@ -48,7 +50,7 @@ public class DataParser {
      * @return a list of site monthly data
      * @throws ParseException in case of parsing problems
      */
-    public List<SiteMonthlyData> parse(Path sourcePath) {
+    List<SiteMonthlyData> parse(Path sourcePath) {
         if (!Files.exists(sourcePath)) {
             throw new ParseException(ERROR_FILE_DOESNT_EXIST);
         }

@@ -1,5 +1,6 @@
-package com.laptevn.advertising;
+package com.laptevn.advertising.initialization;
 
+import com.laptevn.advertising.entity.SiteMonthlyData;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class MetricsCalculatorTest {
     @Test
     public void noData() {
-        List<SiteMonthlyData> monthlyData = Collections.EMPTY_LIST;
+        List<SiteMonthlyData> monthlyData = Collections.emptyList();
         new MetricsCalculator().calculate(monthlyData);
         assertTrue(monthlyData.isEmpty());
     }

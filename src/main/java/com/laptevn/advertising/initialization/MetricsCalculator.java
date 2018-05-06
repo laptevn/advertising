@@ -1,6 +1,8 @@
-package com.laptevn.advertising;
+package com.laptevn.advertising.initialization;
 
+import com.laptevn.advertising.entity.SiteMonthlyData;
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -8,8 +10,9 @@ import java.util.List;
  * Calculates metrics for site monthly data.
  */
 @ThreadSafe
+@Component
 public class MetricsCalculator {
-    public void calculate(List<SiteMonthlyData> monthlyData) {
+    void calculate(List<SiteMonthlyData> monthlyData) {
         monthlyData.forEach(data -> data
                 .setCtr(data.getImpressionsCount() <= 0 ? 0 : data.getClicksCount() * 100F / data.getImpressionsCount())
                 .setCr(data.getImpressionsCount() <= 0 ? 0 : data.getConversionsCount() * 100F / data.getImpressionsCount())
