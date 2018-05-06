@@ -1,5 +1,6 @@
 package com.laptevn.advertising.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -9,14 +10,22 @@ import javax.persistence.IdClass;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+/**
+ * Represents site monthly data.
+ */
 @IdClass(DataPrimaryKey.class)
 @Entity
 @Table(name = "site_monthly_data", indexes = {
         @Index(name = "month_index",  columnList = "month"),
         @Index(name = "site_index", columnList = "site")})
 public class SiteMonthlyData {
-    @Id private String month;
-    @Id private String site;
+    @Id
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String month;
+
+    @Id
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String site;
 
     @JsonProperty("requests") private long requestsCount;
     @JsonProperty("impressions") private long impressionsCount;
@@ -42,6 +51,38 @@ public class SiteMonthlyData {
     @JsonProperty("eCPM")
     @JsonSerialize(using=DoubleSerializer.class)
     private double ecpm;
+
+    public SiteMonthlyData() {
+    }
+
+    /**
+     * Used by Spring Data aggregate queries.
+     */
+    public SiteMonthlyData(
+            String month,
+            String site,
+            long requestsCount,
+            long impressionsCount,
+            long clicksCount,
+            long conversionsCount,
+            double revenue,
+            double ctr,
+            double cr,
+            double fillRate,
+            double ecpm) {
+
+        this.month = month;
+        this.site = site;
+        this.requestsCount = requestsCount;
+        this.impressionsCount = impressionsCount;
+        this.clicksCount = clicksCount;
+        this.conversionsCount = conversionsCount;
+        this.revenue = revenue;
+        this.ctr = (float) ctr;
+        this.cr = (float) cr;
+        this.fillRate = (float) fillRate;
+        this.ecpm = ecpm;
+    }
 
     public String getMonth() {
         return month;

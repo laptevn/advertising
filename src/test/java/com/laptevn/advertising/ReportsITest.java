@@ -46,4 +46,43 @@ public class ReportsITest {
                 .andExpect(content().json("{\"month\":\"January\",\"site\":\"desktop web\",\"requests\":12483775,\"impressions\":11866157,\"clicks\":30965," +
                         "\"conversions\":7608,\"revenue\":23555.46,\"CTR\":0.26,\"CR\":0.06,\"fill_rate\":95.05,\"eCPM\":1.99}"));
     }
+
+    @Test
+    public void wrongMonthAggregate() throws Exception {
+        restClient.perform(get("/reports/months/Januar")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void notExistingMonthAggregate() throws Exception {
+        restClient.perform(get("/reports/months/December")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void notExistingSiteAggregate() throws Exception {
+        restClient.perform(get("/reports/sites/unknown")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void monthAggregate() throws Exception {
+        restClient.perform(get("/reports/months/jAnuary")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"month\":\"January\",\"requests\":34853988,\"impressions\":33100001,\"clicks\":86982," +
+                        "\"conversions\":21406,\"revenue\":65411.76,\"CTR\":0.26,\"CR\":0.06,\"fill_rate\":94.95,\"eCPM\":1.97}"));
+    }
+
+    @Test
+    public void siteAggregate() throws Exception {
+        restClient.perform(get("/reports/sites/iOS")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"site\":\"iOS\",\"requests\":7550386,\"impressions\":6932498,\"clicks\":25318," +
+                        "\"conversions\":7565,\"revenue\":16623.65,\"CTR\":0.34,\"CR\":0.1,\"fill_rate\":92.57,\"eCPM\":2.29}"));
+    }
 }
