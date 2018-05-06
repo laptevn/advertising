@@ -32,11 +32,18 @@ public class ReportsITest {
     }
 
     @Test
-    public void fullMonthAndroid() throws Exception {
-        restClient.perform(get("/reports/months/January/sites/android")
+    public void wrongMonth() throws Exception {
+        restClient.perform(get("/reports/months/Januar/sites/desktop_web")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void fullMonthDesktop() throws Exception {
+        restClient.perform(get("/reports/months/jAnuary/sites/desktop_web")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"month\":\"January\",\"site\":\"android\",\"requests\":9914106,\"impressions\":9412958,\"clicks\":24395," +
-                        "\"conversions\":6018,\"revenue\":18110.41,\"CTR\":0.26,\"CR\":0.06,\"fill_rate\":94.95,\"eCPM\":1.92}"));
+                .andExpect(content().json("{\"month\":\"January\",\"site\":\"desktop web\",\"requests\":12483775,\"impressions\":11866157,\"clicks\":30965," +
+                        "\"conversions\":7608,\"revenue\":23555.46,\"CTR\":0.26,\"CR\":0.06,\"fill_rate\":95.05,\"eCPM\":1.99}"));
     }
 }

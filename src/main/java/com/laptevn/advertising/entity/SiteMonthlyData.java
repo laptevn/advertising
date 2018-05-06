@@ -22,7 +22,10 @@ public class SiteMonthlyData {
     @JsonProperty("impressions") private long impressionsCount;
     @JsonProperty("clicks") private long clicksCount;
     @JsonProperty("conversions") private long conversionsCount;
-    @JsonSerialize(using=DoubleSerializer.class) private double revenue;
+
+    @JsonProperty("revenue")
+    @JsonSerialize(using=DoubleSerializer.class)
+    private double revenue;
 
     @JsonProperty("CTR")
     @JsonSerialize(using=FloatSerializer.class)

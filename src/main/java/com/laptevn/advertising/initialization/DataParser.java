@@ -1,5 +1,6 @@
 package com.laptevn.advertising.initialization;
 
+import com.laptevn.advertising.MonthUtils;
 import com.laptevn.advertising.entity.SiteMonthlyData;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Component;
@@ -9,9 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.DateTimeException;
 import java.time.Month;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -96,7 +95,7 @@ public class DataParser {
 
         try {
             return new SiteMonthlyData()
-                    .setMonth(month.getDisplayName(TextStyle.FULL, Locale.ENGLISH))
+                    .setMonth(MonthUtils.monthToString(month))
                     .setSite(entries[SITE_INDEX].trim())
                     .setRequestsCount(Long.parseLong(entries[REQUESTS_INDEX].trim()))
                     .setImpressionsCount(Long.parseLong(entries[IMPRESSIONS_INDEX].trim()))
