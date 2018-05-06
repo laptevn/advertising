@@ -1,35 +1,43 @@
 package com.laptevn.advertising.entity;
 
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-// TODO: Use other names for serialized form
 @IdClass(DataPrimaryKey.class)
 @Entity
 @Table(name = "site_monthly_data", indexes = {
         @Index(name = "month_index",  columnList = "month"),
         @Index(name = "site_index", columnList = "site")})
 public class SiteMonthlyData {
-    @Id
-    @Column(name = "month", nullable = false) //TODO: Check if we can remove this line
-    private String month;
+    @Id private String month;
+    @Id private String site;
 
-    @Id
-    @Column(name = "site", nullable = false)
-    private String site;
+    @JsonProperty("requests") private long requestsCount;
+    @JsonProperty("impressions") private long impressionsCount;
+    @JsonProperty("clicks") private long clicksCount;
+    @JsonProperty("conversions") private long conversionsCount;
+    @JsonSerialize(using=DoubleSerializer.class) private double revenue;
 
-    private long requestsCount;
-    private long impressionsCount;
-    private long clicksCount;
-    private long conversionsCount;
-    private double revenue;
+    @JsonProperty("CTR")
+    @JsonSerialize(using=FloatSerializer.class)
     private float ctr;
+
+    @JsonProperty("CR")
+    @JsonSerialize(using=FloatSerializer.class)
     private float cr;
+
+    @JsonProperty("fill_rate")
+    @JsonSerialize(using=FloatSerializer.class)
     private float fillRate;
+
+    @JsonProperty("eCPM")
+    @JsonSerialize(using=DoubleSerializer.class)
     private double ecpm;
 
     public String getMonth() {
