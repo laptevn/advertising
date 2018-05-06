@@ -1,7 +1,6 @@
-package com.laptevn.advertising;
+package com.laptevn.advertising.parse;
 
-import com.laptevn.advertising.parser.DataParser;
-import com.laptevn.advertising.parser.ParseException;
+import com.laptevn.advertising.SiteMonthlyData;
 import org.junit.Test;
 
 import java.io.File;

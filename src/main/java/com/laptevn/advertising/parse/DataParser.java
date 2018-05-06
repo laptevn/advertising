@@ -1,4 +1,4 @@
-package com.laptevn.advertising.parser;
+package com.laptevn.advertising.parse;
 
 import com.laptevn.advertising.SiteMonthlyData;
 import net.jcip.annotations.ThreadSafe;
